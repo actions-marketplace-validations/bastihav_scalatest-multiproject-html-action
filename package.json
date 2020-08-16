@@ -19,6 +19,7 @@
   "homepage": "https://github.com/bastihav/scalatest-mutliproject-html-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.4",
-    "@actions/github": "^4.0.0"
+    "@actions/github": "^4.0.0",
+    "node-html-parser": "^1.2.20"
   }
 }
