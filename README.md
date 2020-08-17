@@ -33,8 +33,8 @@ This action merges multiproject scalatest HTML reports to a single overview file
       ├───suite2.html      
       └───index.html
 ```
-## Behaivour
-This action will generate a index.html containing all tests suites and correct summaries, with working links to detail pages in the root directory of the input path.
+## Behaviour
+This action will generate an index.html containing all tests suites and correct summaries, with working links to detail pages in the root directory of the input path.
 It will also copy css, images and js folders accordingly.
 
 ## Example usage
