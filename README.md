@@ -39,7 +39,7 @@ It will also copy css, images and js folders accordingly.
 
 ## Example usage
 ```yaml
-uses: bastihav/scalatest-mutliproject-html-action@v2
+uses: bastihav/scalatest-mutliproject-html-action@v1
 with:
   path: "test_reports/"
 ```
