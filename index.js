@@ -108,6 +108,11 @@ function assembleFile() {
     root.querySelector("#summary_view_row_1_legend_pending_count").set_content(testsPending.toString());
     root.querySelector("#summary_view_row_1_legend_pending_percent").set_content(`(${((testsPending / totalTests)*100).toFixed(2)}%)`);
 
+	// replace header class
+	if (testsSucceeded < totalTests) {
+		root.querySelector("#scalatest-header").setAttribute("class", "scalatest-header-failed");
+	}
+
     // replace rows
     root.querySelector(".sortable").set_content(tableRows);
 
