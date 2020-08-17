@@ -1,13 +1,10 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Scalatest multiproject HTML merger'
+description: 'Merges index html of multiple scalatest reports to a single report'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  inputPath:  # id of input
+    description: 'path to test reports'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: 'test_reports/'
 runs:
   using: 'node12'
   main: 'index.js'
