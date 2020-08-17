@@ -21,8 +21,11 @@ var copiedImages = false;
 var copiedJs = false;
 
 try {
-	directory = core.getInput("inputPath");
+	console.log("Called scalatest multiproject html merge action.")
+	directory = core.getInput("path");
+	console.log("With directory: " + directory)
 	main(directory);
+	console.log("Finished action.")
 } catch (error) {
   	core.setFailed(error);
 }
@@ -73,21 +76,16 @@ function main(directory) {
             if (rawFileContent == "") {
                 rawFileContent = fs.readFileSync(filePath, 'utf8');
             }
-            console.log(filePath);
             extractSummary(filePath);
             extractTableRows(filePath);
             extractTagMap(filePath);
         }
-    });
-    console.log(duration)
-    console.log(totalTests)
-    console.log(suitesCompleted + ":" + suitesAborted)
-    console.log([testsSucceeded, testsFailed, testsCanceled, testsIgnored, testsPending])
-    console.log(tableRows.length)
-
+	});
+	console.log("Extracted all information from test reports")
     assembleFile();
-
-    fs.writeFileSync(directory + "index.html", rawFileContent);
+	console.log("Assembled file contents")
+	fs.writeFileSync(directory + "index.html", rawFileContent);
+	console.log("Wrote index.html")
 }
 
 function assembleFile() {
@@ -182,15 +180,11 @@ function buildDurationString() {
     else if (ms > 0) {
         args.push(ms + " milliseconds")
     }
-
-    //console.log(args)
     const reducedArgs = args.reduce((a,b) => { return a + ", " + b});
-    //console.log(reducedArgs)
     return "Run completed in " + reducedArgs + "."
 }
 
 function extractTagMap(file) {
-	console.log(file + " extract tag map")
     const contents = fs.readFileSync(file, 'utf8')
     const tagMapIndex = contents.lastIndexOf("tagMap = ");
     const opening = contents.indexOf("{", tagMapIndex);
@@ -203,27 +197,23 @@ function extractTagMap(file) {
 }
 
 function extractTableRows(file) {
-	console.log(file + " extract table rows")
     const contents = fs.readFileSync(file, 'utf8')
     const root = HTMLParser.parse(contents)    
     const table = root.querySelector(".sortable");
 
 	const splitFile = file.split(path.sep);
-	console.log(splitFile)
-	console.log(splitFile.length)
     const dir = splitFile[splitFile.length -2];
     // add table legend
     if (tableRows.length == 0) {
         tableRows.push(table.childNodes[1]);
     }
-	console.log("hm")
+
     const interestingRows = table.childNodes.filter(node => node.id != undefined)
     interestingRows.forEach(node => {
         node.querySelectorAll("a").forEach(link => {
             let linkText = link.getAttribute("href");
             linkText = linkText.replace("showDetails(\'", "showDetails(\'" + dir + path.sep);
             link.setAttribute("href", linkText);
-            //console.log("  " +link.getAttribute("href"))
         });
     })
 
@@ -232,7 +222,6 @@ function extractTableRows(file) {
 
 
 function extractSummary(file) {
-    console.log(file + " extract summary")
     const contents = fs.readFileSync(file, 'utf8')
     const root = HTMLParser.parse(contents)
 

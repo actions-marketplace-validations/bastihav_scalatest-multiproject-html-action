@@ -1,10 +1,9 @@
 name: 'Scalatest multiproject HTML merger'
 description: 'Merges index html of multiple scalatest reports to a single report'
 inputs:
-  inputPath:  # id of input
+  path:  # id of input
     description: 'path to test reports'
     required: true
-    default: 'test_reports/'
 runs:
   using: 'node12'
   main: 'index.js'
